@@ -5,54 +5,84 @@
   <title>HTML5 Canvas</title>
   <style>
   html, body { margin:0; }
+  .controls {
+    position: absolute:
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #dedede;
+  }
+
+  .ctrl { margin: 0 10px;}
   </style>
 </head>
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-  const canvas = document.querySelector('#draw');
-  const ctx = canvas.getContext('2d');
+  <div class="controls">
+    <div class="ctrl">
+      <label for="color">Colour:</label>
+      <input class="color-select" type="color" value="#000000" />
+    </div>
+    <div class="ctrl">
+      <label for="stroke">Stroke:</label>
+      <input class="stroke-width" type="number" min="5" max="100" value="20" />
+    </div>
+  </div>
+  <canvas id="draw" width="800" height="800"></canvas>
+  <script>
+    const strokeSelector = document.querySelector('.stroke-width');
+    const colorPicker = document.querySelector('.color-select');
+    const canvas = document.querySelector('#draw');
+    const ctx = canvas.getContext('2d');
 
-  //canvas settings
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+    //canvas settings
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-  // context settings
-  ctx.strokeStyle = '#BADA55';
-  ctx.lineJoin = 'round';
-  ctx.lineCap = 'round';
-  ctx.lineWidth = 50;
+    // context settings
+    ctx.strokeStyle = '#000000';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 20;
 
-  let isDrawing = false;
-  let lastX = 0;
-  let lastY = 0;
-  let hue = 0;
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
 
-  const draw = function draw(e) {
-    if (!isDrawing)  return;
+    const draw = function draw(e) {
+      if (!isDrawing)  return;
 
-    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-    ctx.beginPath();
-    // start from
-    ctx.moveTo(lastX, lastY);
-    // go to
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+      ctx.beginPath();
+      // start from
+      ctx.moveTo(lastX, lastY);
+      // go to
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      [lastX, lastY] = [e.offsetX, e.offsetY];
 
-    hue++;
+    };
 
-  };
+    const setColor = function setColor() {
+      ctx.strokeStyle = this.value;
+    };
 
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseout', () => isDrawing = false);
-  canvas.addEventListener('mouseup', () => isDrawing = false);
-  canvas.addEventListener('mousedown', (e) => {
-    isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-  });
+    const setLineWidth = function setLineWidth() {
+      ctx.lineWidth = this.value;
+    };
 
-</script>
+    colorPicker.addEventListener('change', setColor);
+    strokeSelector.addEventListener('change', setLineWidth);
+
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+  </script>
 
 </body>
 </html>
