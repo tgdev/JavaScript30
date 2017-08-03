@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hold Shift to Check Multiple Checkboxes</title>
+  <style>
+
+    html {
+      font-family: sans-serif;
+      background:#ffc600;
+    }
+
+    .inbox {
+      max-width:400px;
+      margin:50px auto;
+      background:white;
+      border-radius:5px;
+      box-shadow:10px 10px 0 rgba(0,0,0,0.1);
+    }
+
+    .item {
+      display:flex;
+      align-items:center;
+      border-bottom: 1px solid #F1F1F1;
+    }
+
+    .item:last-child {
+      border-bottom:0;
+    }
+
+
+    input:checked + p {
+      background:#F9F9F9;
+      text-decoration: line-through;
+    }
+
+    input[type="checkbox"] {
+      margin:20px;
+    }
+
+    p {
+      margin:0;
+      padding:20px;
+      transition:background 0.2s;
+      flex:1;
+      font-family:'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+      border-left: 1px solid #D1E2FF;
+    }
+
+  </style>
+</head>
+<body>
+   <!--
+   The following is a common layout you would see in an email client.
+
+   When a user clicks a checkbox, holds Shift, and then clicks another checkbox a few rows down, all the checkboxes inbetween those two checkboxes should be checked.
+
+  -->
+  <div class="inbox">
+    <div class="item">
+      <input type="checkbox">
+      <p>This is an inbox layout.</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Check one item</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Hold down your Shift key</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Check a lower item</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Everything inbetween should also be set to checked</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Try do it with out any libraries</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Just regular JavaScript</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Good Luck!</p>
+    </div>
+    <div class="item">
+      <input type="checkbox">
+      <p>Don't forget to tweet your result!</p>
+    </div>
+  </div>
+
+  <script>
+  const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+
+    let lastChecked;
+
+    const handleCheck = function handleCheck(e) {
+      let inBetween = false;
+
+      // check if the shiftKey is down
+      // AND that the input is being checked
+      if (e.shiftKey && this.checked) {
+        checkboxes.forEach(checkbox => {
+          if (checkbox === this || checkbox === lastChecked) {
+            // set to opposite of iteself to allow selecting in both directions
+            inBetween = !inBetween;
+          }
+
+          // if we're in range set the checked attribute to checked
+          if (inBetween) {
+            checkbox.checked = true;
+          }
+        });
+      }
+
+      lastChecked = this;
+    };
+
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+  </script>
+
+  <!-- <script>
+    // First attempt... yikes!
+    const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    console.log({checkboxes});
+
+    let firstCheckbox = null;
+    let selectingMultiple = false;;
+
+    const selectCheckbox = function selectCheckbox() {
+      let direction = 1; // 1 is top down, -1 will be bottom up
+      // check if clicked before
+      if (firstCheckbox === null) {
+        // if first click set firstActive as item clicked
+        firstCheckbox = this;
+
+      } else if (firstCheckbox !== null && selectingMultiple) {
+        const startIndex = checkboxes.indexOf(firstCheckbox);
+        const endIndex = checkboxes.indexOf(this);
+        console.log({startIndex});
+        console.log({endIndex});
+
+        // else get all DOM items between firstActive and item clicked
+        // loop through them updating input attribute to checked
+        const selectedCheckboxes = checkboxes.filter((checkbox, index) => {
+          return index >= startIndex && index <= endIndex;
+        }).map(selected => {
+          selected.setAttribute('checked', 'checked');
+        });
+        // console.log({selectedCheckboxes});
+        firstCheckbox = null;
+        selectingMultiple = false;
+      }
+    }
+
+    // set selectingMultiple to true
+    const activateMultiSelect = function activateMultiSelect(e) {
+      if (e.keyCode === 16) {
+        selectingMultiple = true;
+      }
+    };
+
+    // listen for click
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', selectCheckbox));
+
+    // listen for shift keypress
+    document.addEventListener('keydown', activateMultiSelect);
+
+  </script> -->
+</body>
+</html>
