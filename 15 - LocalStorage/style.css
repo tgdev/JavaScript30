@@ -67,7 +67,8 @@
       content: '🌮';
     }
 
-    .add-items {
+    .add-items,
+    .button-wrapper {
       margin-top: 20px;
     }
 
@@ -75,4 +76,10 @@
       padding:10px;
       outline:0;
       border:1px solid rgba(0,0,0,0.1);
+    }
+
+    .btn {
+      border: none;
+      padding: 10px;
+      background-color: goldenrod;
     }
