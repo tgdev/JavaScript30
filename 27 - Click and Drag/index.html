@@ -40,30 +40,33 @@
     let startX;
     let scrollLeft;
 
-    slider.addEventListener('mousedown', (e) => {
+    const triggerDragSlider = function triggerDragSlider(e) {
       isDown = true;
       slider.classList.add('active');
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
-    });
+    };
 
-    slider.addEventListener('mouseup', () => {
+    const resetDragSlider = function resetDragSlider() {
       isDown = false;
       slider.classList.remove('active');
-    });
+    };
 
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-
-    slider.addEventListener('mousemove', (e) => {
+    const dragSlider = function dragSlider(e) {
       if(!isDown) return;
       e.preventDefault();
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 3;
       slider.scrollLeft = scrollLeft - walk;
-    });
+    };
+
+    slider.addEventListener('mousedown', triggerDragSlider);
+
+    slider.addEventListener('mouseup', resetDragSlider);
+
+    slider.addEventListener('mouseleave', resetDragSlider);
+
+    slider.addEventListener('mousemove', dragSlider);
 
   </script>
 
