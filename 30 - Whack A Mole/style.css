@@ -1,6 +1,6 @@
 html {
   box-sizing: border-box;
-  font-size: 10px;
+  font-size: 16px;
   background: #ffc600;
 }
 
@@ -11,14 +11,103 @@ html {
 body {
   padding: 0;
   margin:0;
+  font-family: sans-serif;
+}
+
+main {
+  position: relative;
   font-family: 'Amatic SC', cursive;
 }
 
 h1 {
   text-align: center;
-  font-size: 10rem;
+  font-size: 6rem;
   line-height:1;
   margin-bottom: 0;
+}
+
+.controls,
+.modes {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  align-items: center;
+}
+
+.controls > div,
+.modes > div {
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+.controls {
+  padding: 10px 0;
+  font-family: 'Share Tech Mono', monospace;
+  background-color: #222;
+  color: #fff;
+}
+
+.hi-score.new-score {
+  -webkit-animation: 1s linear 0s pulse;
+          animation: 1s linear 0s pulse;
+}
+
+@-webkit-keyframes pulse { 0% { transition: scale(0.75); } 50% { transition: scale(1.2); } 100% { transition: scale(1); } }
+        @keyframes pulse { 0% { transition: scale(0.75); } 50% { transition: scale(1.2); } 100% { transition: scale(1); } }
+
+.reset {
+  display: inline-block;
+  margin-left: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 5px 10px;
+  border: 0;
+  background-color: #fff;
+}
+
+.btn[disabled="disabled"] {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.timer {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.game-over-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 3rem;
+  border-radius:1rem;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease;
+  will-change: opacity, visbility;
+  z-index: 2;
+}
+
+.game-over-panel.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.game-over-panel h1 {
+  color: red;
+  margin: 0;
+}
+
+.game-over-panel p {
+  font-size: 2rem;
 }
 
 .score {

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Whack A Mole!</title>
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="controls">
+      <div class="ctrl">
+        <button class="btn btn-start">New Game</button>
+        <span class="timer">00:00</span>
+      </div>
+      <div class="ctrl">
+        Difficulty:
+        <select class="game-mode">
+          <option value="easy">EASY</option>
+          <option value="hard">HARD</option>
+          <option value="expert">EXPERT</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        Hi-score: <span class="hi-score"></span>
+        <span class="reset">Reset</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Whack-a-mole! <span class="score">0</span></h1>
+
+    <div class="game">
+      <div class="hole hole1">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole2">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole3">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole4">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole5">
+        <div class="mole"></div>
+      </div>
+      <div class="hole hole6">
+        <div class="mole"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <section class="game-over-panel">
+    <h1>GAME OVER!</h1>
+    <p>We hope you had fun.</p>
+  </section>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
